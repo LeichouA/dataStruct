@@ -36,23 +36,46 @@ public class Array<E> {
        add(0,e);
     }
 
-    public void remove(int index){
+    public boolean isEmpty(){
+
+        if (data.length<=0){
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public E remove(int index){
 
         if (index<0 ||index>data.length){
 
             throw new IllegalArgumentException("remove faild,out of index");
         }
 
+        E ret = data[index];
+
         for (int i= index+1;i<size;i++){
             data[i]=data[i+1];
         }
         size--;
+
+        return ret;
+    }
+
+    public E getLast(){
+
+        return data[data.length];
+    }
+
+    public E removeLast(){
+
+        return remove(data.length-1);
     }
 
     public void add(int index, E e){
 
         if (size ==data.length){
-            throw new IllegalArgumentException("Add faild,Array is full");
+            resize(data.length);
         }
 
         if (index<0||index>size){
@@ -67,6 +90,19 @@ public class Array<E> {
         size++;
     }
 
+    private void resize(int size) {
+
+        E[] data1 = (E[]) new Object[size*2];
+
+        for (int i=0;i<size;i++){
+
+            data1[i]=data[i];
+        }
+
+        data = data1;
+
+    }
+
     public E get(int index){
 
         return data[index];
@@ -77,6 +113,8 @@ public class Array<E> {
         data[index]=e;
 
     }
+
+
     @Override
     public String toString(){
 
